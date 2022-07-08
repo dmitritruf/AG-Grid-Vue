@@ -65,20 +65,22 @@
             this.gridOptions = {};
             Axios.get('/api/v1/admin/security/users')
             .then(res => {
+                let _data = res.data;
+                if (_data.data) {
+                    this.rowData = _data.data;
+                } else 
+                    this.rowData = res.data;
 
-                // this.rowData = res.data;
+                this.columnDefs = Object.freeze([
+                    {headerName: '#', field: 'id'},
+                    {headerName: 'Avatar', field: 'avatar', cellRenderer: avatarRenderer},
+                    {headerName: 'First Name', field: 'first_name'},
+                    {headerName: 'Last Name', field: 'last_name'},
+                    {headerName: 'Email', field: 'email'},
+                    {headerName: 'Status', field: 'status'},
+                ])
+                this.showGrid = true;
             })
-            this.rowData = UserData.data;
-
-            this.columnDefs = Object.freeze([
-                {headerName: '#', field: 'id'},
-                {headerName: 'Avatar', field: 'avatar', cellRenderer: avatarRenderer},
-                {headerName: 'First Name', field: 'first_name'},
-                {headerName: 'Last Name', field: 'last_name'},
-                {headerName: 'Email', field: 'email'},
-                {headerName: 'Status', field: 'status'},
-            ])
-            this.showGrid = true;
         }
     }
 
